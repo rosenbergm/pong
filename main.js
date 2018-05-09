@@ -4,8 +4,14 @@ const context = canvas.getContext("2d");
 var width = canvas.width
 var height = canvas.height
 
+var leftScore = 0
+var rightScore = 0
+const score = document.getElementById('score')
+
 var lPaddleHeight = 80
+var lPaddleX = 20
 var rPaddleHeight = 80
+var rPaddleX = canvas.width-30
 var paddleWidth = 10
 
 var bRad = 10
@@ -17,8 +23,6 @@ var dy = -2
 var lpy = canvas.height / 2 - lPaddleHeight / 2
 var rpy = canvas.height / 2 - rPaddleHeight / 2
 
-var keyCode
-
 var leftPaddleDownPressed = false
 var leftPaddleUpPressed = false
 var rightPaddleDownPressed = false
@@ -26,12 +30,12 @@ var rightPaddleUpPressed = false
 
 function drawLeftPaddle(ly) {
   context.fillStyle = '#fff'
-  context.fillRect(20, ly, paddleWidth, lPaddleHeight)
+  context.fillRect(lPaddleX, ly, paddleWidth, lPaddleHeight)
 }
 
 function drawRightPaddle(ry) {
   context.fillStyle = '#fff'
-  context.fillRect(canvas.width-30, ry, paddleWidth, rPaddleHeight)
+  context.fillRect(rPaddleX, ry, paddleWidth, rPaddleHeight)
 }
 
 document.addEventListener('keydown', keyDownHandler, false);
@@ -123,13 +127,13 @@ function drawBall() {
   context.closePath();
 
   if(bx + dx > width-bRad) {
-    if (by > rpy && by < rpy + rPaddleHeight) {
+    if (by > rpy && by < rpy + rPaddleHeight && bx >= rPaddleX ) {
       console.log('SPPS')
       dx = -dx;
     }
     else {
       console.log('GAME OVER RIGHT!')
-      document.location.reload()
+      leftScore++
     }
   }
   else if (bx + dx < bRad) {
@@ -138,7 +142,7 @@ function drawBall() {
     }
     else {
       console.log('GAME OVER LEFT!')
-      document.location.reload()
+      rightScore++
     } 
   }
 
@@ -158,4 +162,6 @@ function init() {
   drawRightPaddle(rpy);
   drawLeftPaddle(lpy);
   drawBall()
+
+  score.innerHTML = leftScore + " : " + rightScore;
 }
