@@ -6,6 +6,7 @@ var height = canvas.height
 
 var lPaddleHeight = 80
 var rPaddleHeight = 80
+var paddleWidth = 10
 
 var bRad = 10
 var bx = width / 2
@@ -25,12 +26,12 @@ var rightPaddleUpPressed = false
 
 function drawLeftPaddle(ly) {
   context.fillStyle = '#fff'
-  context.fillRect(10, ly, 10, lPaddleHeight)
+  context.fillRect(10, ly, paddleWidth, lPaddleHeight)
 }
 
 function drawRightPaddle(ry) {
   context.fillStyle = '#fff'
-  context.fillRect(canvas.width-20, ry, 10, rPaddleHeight)
+  context.fillRect(canvas.width-20, ry, paddleWidth, rPaddleHeight)
 }
 
 document.addEventListener('keydown', keyDownHandler, false);
@@ -121,11 +122,20 @@ function drawBall() {
   context.fill();
   context.closePath();
 
-  if(bx + dx > canvas.width-bRad|| bx + dx < bRad) {
-    dx = -dx;
+  if(bx + dx > width-bRad) {
+    if (by > rpy && by < rpy + rPaddleHeight) {
+      dx = -dx;
+    }
+    console.log('GAME OVER RIGHT!')
   }
-  if(by + dy > canvas.height-bRad || by + dy < bRad) {
-      dy = -dy;
+  else if (bx + dx < bRad) {
+    if (by > lpy && by < lpy + lPaddleHeight) {
+      dx = -dx;
+    }
+    console.log('GAME OVER LEFT!')
+  }
+  if(by + dy > height-bRad || by + dy < bRad) {
+    dy = -dy;
   }
 
   bx += dx;
