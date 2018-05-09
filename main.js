@@ -7,6 +7,12 @@ var height = canvas.height
 var lPaddleHeight = 80
 var rPaddleHeight = 80
 
+var bRad = 10
+var bx = width / 2
+var by = height / 2
+var dx = 2
+var dy = -2
+
 var lpy = canvas.height / 2 - lPaddleHeight / 2
 var rpy = canvas.height / 2 - rPaddleHeight / 2
 
@@ -108,6 +114,24 @@ function moveRightPlayerDown(speed) {
   drawRightPaddle(rpy)
 }
 
+function drawBall() {
+  context.beginPath();
+  context.arc(bx, by, bRad, 0, Math.PI*2);
+  context.fillStyle = "#FFF";
+  context.fill();
+  context.closePath();
+
+  if(bx + dx > canvas.width-bRad|| bx + dx < bRad) {
+    dx = -dx;
+  }
+  if(by + dy > canvas.height-bRad || by + dy < bRad) {
+      dy = -dy;
+  }
+
+  bx += dx;
+  by += dy;
+}
+
 function init() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle = '#000';
@@ -115,4 +139,5 @@ function init() {
 
   drawRightPaddle(rpy);
   drawLeftPaddle(lpy);
+  drawBall()
 }
