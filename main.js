@@ -26,12 +26,12 @@ var rightPaddleUpPressed = false
 
 function drawLeftPaddle(ly) {
   context.fillStyle = '#fff'
-  context.fillRect(10, ly, paddleWidth, lPaddleHeight)
+  context.fillRect(20, ly, paddleWidth, lPaddleHeight)
 }
 
 function drawRightPaddle(ry) {
   context.fillStyle = '#fff'
-  context.fillRect(canvas.width-20, ry, paddleWidth, rPaddleHeight)
+  context.fillRect(canvas.width-30, ry, paddleWidth, rPaddleHeight)
 }
 
 document.addEventListener('keydown', keyDownHandler, false);
@@ -124,16 +124,24 @@ function drawBall() {
 
   if(bx + dx > width-bRad) {
     if (by > rpy && by < rpy + rPaddleHeight) {
+      console.log('SPPS')
       dx = -dx;
     }
-    console.log('GAME OVER RIGHT!')
+    else {
+      console.log('GAME OVER RIGHT!')
+      document.location.reload()
+    }
   }
   else if (bx + dx < bRad) {
     if (by > lpy && by < lpy + lPaddleHeight) {
       dx = -dx;
     }
-    console.log('GAME OVER LEFT!')
+    else {
+      console.log('GAME OVER LEFT!')
+      document.location.reload()
+    } 
   }
+
   if(by + dy > height-bRad || by + dy < bRad) {
     dy = -dy;
   }
