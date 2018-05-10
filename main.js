@@ -133,6 +133,8 @@ function drawBall() {
     }
     else {
       console.log('GAME OVER RIGHT!')
+      bx = width / 2
+      by = height / 2
       leftScore++
     }
   }
@@ -142,6 +144,8 @@ function drawBall() {
     }
     else {
       console.log('GAME OVER LEFT!')
+      bx = width / 2
+      by = height / 2
       rightScore++
     } 
   }
