@@ -39,10 +39,10 @@ function drawRightPaddle(ry) {
   context.fillRect(rPaddleX, ry, paddleWidth, rightPaddleHeight)
 }
 
-function changeBallXDirection() {
+function bounceOfPlayers() {
   directionX = -directionX;
 }
-function changeBallYDirection() {
+function bounceOffTopOrBotton() {
   directionY = -directionY;
 }
 
