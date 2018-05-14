@@ -9,9 +9,9 @@ var rightScore = 0
 const score = document.getElementById('score')
 
 var lPaddleHeight = 80
-var lPaddleX = 20
+var lPaddleX = 0
 var rPaddleHeight = 80
-var rPaddleX = canvas.width-30
+var rPaddleX = canvas.width-10
 var paddleWidth = 10
 
 var bRad = 10
@@ -127,7 +127,7 @@ function drawBall() {
   context.closePath();
 
   if(bx + dx > width-bRad) {
-    if (by > rpy && by < rpy + rPaddleHeight && bx >= rPaddleX ) {
+    if (by > rpy && by < rpy + rPaddleHeight) {
       console.log('SPPS')
       dx = -dx;
     }
