@@ -16,7 +16,7 @@ function draw() {
 
   if(isInLeftPaddleArea()) {
     if (isBallOnRightPaddle()) {
-      changeBallXDirection()
+      bounceOfPlayers()
     }
     else {
       centerBall()
@@ -25,7 +25,7 @@ function draw() {
   }
   else if (isInRightPaddleArea()) {
     if (isBallOnLeftPaddle()) {
-      changeBallXDirection()
+      bounceOfPlayers()
     }
     else {
       centerBall()
@@ -34,7 +34,7 @@ function draw() {
   }
 
   if(isBallTouchingTopOrBottomSide()) {
-    changeBallYDirection()
+    bounceOffTopOrBottom()
   }
 
 }

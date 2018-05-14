@@ -42,7 +42,7 @@ function drawRightPaddle(ry) {
 function bounceOfPlayers() {
   directionX = -directionX;
 }
-function bounceOffTopOrBotton() {
+function bounceOffTopOrBottom() {
   directionY = -directionY;
 }
 
