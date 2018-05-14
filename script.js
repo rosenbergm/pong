@@ -14,7 +14,7 @@ function draw() {
     moveRightPlayerUp(5);
   }
 
-  if(ballX + directionX > screenWidth - ballRadius) {
+  if(isInLeftPaddleArea()) {
     if (isBallOnRightPaddle()) {
       changeBallXDirection()
     }
@@ -23,7 +23,7 @@ function draw() {
       leftScore++
     }
   }
-  else if (ballX + directionX < ballRadius) {
+  else if (isInRightPaddleArea()) {
     if (isBallOnLeftPaddle()) {
       changeBallXDirection()
     }

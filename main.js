@@ -70,6 +70,22 @@ function isBallTouchingTopOrBottomSide() {
     return false
   }
 }
+function isInLeftPaddleArea() {
+  if (ballX + directionX > screenWidth - ballRadius) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+function isInRightPaddleArea() {
+  if (ballX + directionX < ballRadius) {
+    return true
+  }
+  else {
+    return false
+  }
+}
 
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
