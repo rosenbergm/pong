@@ -1,27 +1,28 @@
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
-var width = canvas.width
-var height = canvas.height
+var screenWidth = canvas.width
+var screenHeight = canvas.height
 
 var leftScore = 0
 var rightScore = 0
 const score = document.getElementById('score')
 
-var lPaddleHeight = 80
+var leftPaddleHeight = 80
 var lPaddleX = 0
-var rPaddleHeight = 80
-var rPaddleX = canvas.width-10
+var rightPaddleHeight = 80
+var rPaddleX = screenWidth-10
+
 var paddleWidth = 10
 
-var bRad = 10
-var bx = width / 2
-var by = height / 2
-var dx = 2
-var dy = -2
+var ballRadius = 10
+var ballX = screenWidth / 2
+var ballY = screenHeight / 2
+var directionX = 2
+var directionY = -2
 
-var lpy = canvas.height / 2 - lPaddleHeight / 2
-var rpy = canvas.height / 2 - rPaddleHeight / 2
+var leftPaddleY = screenHeight / 2 - leftPaddleHeight / 2
+var rightPaddleY = screenHeight / 2 - rightPaddleHeight / 2
 
 var leftPaddleDownPressed = false
 var leftPaddleUpPressed = false
@@ -30,12 +31,44 @@ var rightPaddleUpPressed = false
 
 function drawLeftPaddle(ly) {
   context.fillStyle = '#fff'
-  context.fillRect(lPaddleX, ly, paddleWidth, lPaddleHeight)
+  context.fillRect(lPaddleX, ly, paddleWidth, leftPaddleHeight)
 }
 
 function drawRightPaddle(ry) {
   context.fillStyle = '#fff'
-  context.fillRect(rPaddleX, ry, paddleWidth, rPaddleHeight)
+  context.fillRect(rPaddleX, ry, paddleWidth, rightPaddleHeight)
+}
+
+function changeBallXDirection() {
+  directionX = -directionX;
+}
+function changeBallYDirection() {
+  directionY = -directionY;
+}
+
+function isBallOnLeftPaddle() {
+  if (ballY > leftPaddleY && ballY < leftPaddleY + leftPaddleHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+function isBallOnRightPaddle() {
+  if (ballY > rightPaddleY && ballY < rightPaddleY + rightPaddleHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+function isBallTouchingTopOrBottomSide() {
+  if (ballY + directionY > screenHeight - ballRadius || ballY + directionY < ballRadius) {
+    return true
+  }
+  else {
+    return false
+  }
 }
 
 document.addEventListener('keydown', keyDownHandler, false);
@@ -72,90 +105,93 @@ function keyUpHandler(event) {
 }
 
 function moveLeftPlayerUp(speed) {
-  if (lpy + lPaddleHeight >= height) {
-    lpy = height - lPaddleHeight
+  if (leftPaddleY + leftPaddleHeight >= screenHeight) {
+    leftPaddleY = screenHeight - leftPaddleHeight
   }
-  if (lpy <= 0) {
-    lpy = 0
+  if (leftPaddleY <= 0) {
+    leftPaddleY = 0
   }
 
-  lpy -= speed
-  drawLeftPaddle(lpy)
+  leftPaddleY -= speed
+  drawLeftPaddle(leftPaddleY)
 }
 
 function moveLeftPlayerDown(speed) {
-  if (lpy + lPaddleHeight >= height) {
-    lpy = height - lPaddleHeight
+  if (leftPaddleY + leftPaddleHeight >= screenHeight) {
+    leftPaddleY = screenHeight - leftPaddleHeight
   }
-  if (lpy <= 0) {
-    lpy = 0
+  if (leftPaddleY <= 0) {
+    leftPaddleY = 0
   }
 
-  lpy += speed
-  drawLeftPaddle(lpy)
+  leftPaddleY += speed
+  drawLeftPaddle(leftPaddleY)
 }
 
 function moveRightPlayerUp(speed) {
-  if (rpy + rPaddleHeight >= height) {
-    rpy = height - rPaddleHeight
+  if (rightPaddleY + rightPaddleHeight >= screenHeight) {
+    rightPaddleY = screenHeight - rightPaddleHeight
   }
-  if (rpy <= 0) {
-    rpy = 0
+  if (rightPaddleY <= 0) {
+    rightPaddleY = 0
   }
 
-  rpy -= speed
-  drawRightPaddle(rpy)
+  rightPaddleY -= speed
+  drawRightPaddle(rightPaddleY)
 }
 
 function moveRightPlayerDown(speed) {
-  if (rpy + rPaddleHeight >= height) {
-    rpy = height - rPaddleHeight
+  if (rightPaddleY + rightPaddleHeight >= screenHeight) {
+    rightPaddleY = screenHeight - rightPaddleHeight
   }
-  if (rpy <= 0) {
-    rpy = 0
+  if (rightPaddleY <= 0) {
+    rightPaddleY = 0
   }
 
-  rpy += speed
-  drawRightPaddle(rpy)
+  rightPaddleY += speed
+  drawRightPaddle(rightPaddleY)
+}
+
+function centerBall() {
+  ballX = screenWidth / 2
+  ballY = screenHeight / 2
 }
 
 function drawBall() {
   context.beginPath();
-  context.arc(bx, by, bRad, 0, Math.PI*2);
+  context.arc(ballX, ballY, ballRadius, 0, Math.PI*2);
   context.fillStyle = "#FFF";
   context.fill();
   context.closePath();
 
-  if(bx + dx > width-bRad) {
-    if (by > rpy && by < rpy + rPaddleHeight) {
+  /*if(ballX + directionX > screenWidth - ballRadius) {
+    if (ballY > rightPaddleY && ballY < rightPaddleY + rightPaddleHeight) {
       console.log('SPPS')
-      dx = -dx;
+      directionX = -directionX;
     }
     else {
       console.log('GAME OVER RIGHT!')
-      bx = width / 2
-      by = height / 2
+      centerBall()
       leftScore++
     }
   }
-  else if (bx + dx < bRad) {
-    if (by > lpy && by < lpy + lPaddleHeight) {
-      dx = -dx;
+  else if (ballX + directionX < ballRadius) {
+    if (ballY > leftPaddleY && ballY < leftPaddleY + leftPaddleHeight) {
+      directionX = -directionX;
     }
     else {
       console.log('GAME OVER LEFT!')
-      bx = width / 2
-      by = height / 2
+      centerBall()
       rightScore++
     } 
   }
 
-  if(by + dy > height-bRad || by + dy < bRad) {
-    dy = -dy;
-  }
+  if(ballY + directionY > screenHeight - ballRadius || ballY + directionY < ballRadius) {
+    directionY = -directionY;
+  }*/
 
-  bx += dx;
-  by += dy;
+  ballX += directionX;
+  ballY += directionY;
 }
 
 function init() {
@@ -163,9 +199,9 @@ function init() {
   context.fillStyle = '#000';
   context.fillRect(0, 0, canvas.width, canvas.height)
 
-  drawRightPaddle(rpy);
-  drawLeftPaddle(lpy);
-  drawBall()
+  drawRightPaddle(rightPaddleY);
+  drawLeftPaddle(leftPaddleY);
+  drawBall();
 
   score.innerHTML = leftScore + " : " + rightScore;
 }

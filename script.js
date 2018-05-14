@@ -14,6 +14,28 @@ function draw() {
     moveRightPlayerUp(5);
   }
 
+  if(ballX + directionX > screenWidth - ballRadius) {
+    if (isBallOnRightPaddle()) {
+      changeBallXDirection()
+    }
+    else {
+      centerBall()
+      leftScore++
+    }
+  }
+  else if (ballX + directionX < ballRadius) {
+    if (isBallOnLeftPaddle()) {
+      changeBallXDirection()
+    }
+    else {
+      centerBall()
+      rightScore++
+    } 
+  }
+
+  if(isBallTouchingTopOrBottomSide()) {
+    changeBallYDirection()
+  }
 
 }
 setInterval(draw, 10);
